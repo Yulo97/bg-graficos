@@ -46,141 +46,41 @@
 
     <script>
 
+        var ctx = document.getElementById('myChart');
 
-    
-    var ctx = document.getElementById('myChart');
-
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            datasets: [{
-                label: 'Automoviles',
-                backgroundColor: ['#ee6055', '#60d394', '#aaf683', '#ffd97d', '#ff9b85'],
-                borderColor: ['black'],
-                borderWidth: 1
-            }]
-        },
-        options:{
-            scale:{
-                y:{
-                    beginAtZero: true
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                datasets: [{
+                    label: '# de Automoviles',
+                    backgroundColor: ['#ee6055', '#60d394', '#aaf683', '#ffd97d', '#ff9b85'],
+                    borderColor: ['black'],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                scale: {
+                    y: {
+                        beginAtZero: true
+                    }
                 }
             }
+        })
+
+        let url = 'http://localhost/bg-graficos/graficos-autos.php';
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => mostrarDatos(data))
+            .catch(error => console.log(error))
+
+        const mostrarDatos = (auto) => {
+            console.log(auto);
+            auto.forEach(element => {
+                myChart.data['labels'].push(element['autoModelo']);
+                myChart.data['datasets'][0].data.push(element['COUNT(B.autoModelo)']);
+            });
         }
-    })
-    
-    let url = 'http://localhost/bg-graficos/graficos-autos.php';
-
-    fetch(url)
-        .then(response => response.json())
-        .then(data => mostrarDatos(data))
-        .catch(error => console.log(error))
-
-        const mostrarDatos = (data) => {
-            console.log(data)
-        }
-    
-    //https://www.youtube.com/watch?v=G-j5SI7Qitk&ab_channel=Inform%C3%A1ticaDP
-    //https://www.youtube.com/watch?v=kd2KoA-KkGQ&ab_channel=Inform%C3%A1ticaDP
-    
-    
-    
-    /*
-        $(document).ready(function () {
-            CargarDatosGraficoBar();
-        });
-
-        var titulo = [];
-        var cantidad = [];
-
-        function CargarDatosGraficoBar() {
-            $.ajax({
-                url: './graficos-autos.php',
-                type: "POST"
-            }).done(function (resp) {
-                if (resp.length > 0) {
-                    var data = JSON.parse(resp);
-                    
-                    console.log(data.length);
-
-                    for (var i = 0; i < data.length; i++) {
-                        titulo.push(data[i][0]);
-                        cantidad.push(data[i][1]);
-                    }
-
-                    CrearGrafico(titulo, cantidad);
-                }
-            }).fail(function () {
-                alert("malio sal")
-            })
-        }
-
-        function CrearGrafico(titulo, cantidad) {
-            const ctx = document.getElementById('myChart');
-            var chart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: titulo,
-                    datasets: [{
-                        label: titulo,
-                        data: cantidad,
-                        borderWidth: 1,
-                        backgroundColor: ['#jjj'],
-                        borderColor: ['black'],
-                    }],
-                    options: {
-                        scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: true
-                                }
-                            }]
-                        }
-                    }
-                }
-            })
-        }
-
-*/
-
-  /*  const ctx = document.getElementById('myChart');
-
-         var chart = new Chart(ctx, {
-             type: 'bar',
-             data: {
-                 datasets: [{
-                     label: 'Vehiculo',
-                     borderWidth: 1,
-                     backgroundColor: ['#jjj'],
-                     borderColor: ['black'],
-                 }],
-                 options: {
-                     scales: {
-                         y: {
-                             beginAtZero: true
-                         }
-                     }
-                 }
-             }
-         })
- 
-         let sucursalID = '3';
- 
-         let url = './graficos-autos.php';
- 
-         fetch(url)
-             .then(response => response.json())
-             .then(datos => mostrar(datos))
-             .catch(error => console.log(error))
- 
-             
-         const mostrar = function (autos) {
-             autos.array.forEach(element => {
-                 chart.data['labels'].push(autos[0]);
-                 chart.data['datasets'][0].data.push(autos[0][1]);
-             });
-         }
-*/
 
     </script>
 
