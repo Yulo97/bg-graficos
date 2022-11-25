@@ -20,8 +20,13 @@
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
         crossorigin="anonymous"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    
+        <style>
+            .grafico{
+                width: 100vw;
+                height: 100vh;
+            }
+        </style>
 </head>
 
 <body>
@@ -29,19 +34,21 @@
         <canvas id="myChart"></canvas>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
     <script>
 
         var ctx = document.getElementById('myChart');
 
         var myChart = new Chart(ctx, {
-            type: 'bar',
+            type: 'polarArea',
             data: {
                 datasets: [{
-                    label: '# de Automoviles',
+                    label: '# de Categorias',
                     backgroundColor: ['#ee6055', '#60d394', '#aaf683', '#ffd97d', '#ff9b85'],
                     borderColor: ['black'],
-                    borderWidth: 2
+                    borderWidth: 1
                 }]
             },
             options: {
@@ -53,7 +60,7 @@
             }
         })
 
-        let url = 'http://localhost/bg-graficos/graficos-autos.php';
+        let url = 'http://localhost/bg-graficos/graficos-categorias.php';
 
         fetch(url)
             .then(response => response.json())
