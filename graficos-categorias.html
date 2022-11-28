@@ -42,7 +42,7 @@
         var ctx = document.getElementById('myChart');
 
         var myChart = new Chart(ctx, {
-            type: 'polarArea',
+            type: 'doughnut',
             data: {
                 datasets: [{
                     label: '# de Categorias',
@@ -67,11 +67,11 @@
             .then(data => mostrarDatos(data))
             .catch(error => console.log(error))
 
-        const mostrarDatos = (auto) => {
-            console.log(auto);
-            auto.forEach(element => {
-                myChart.data['labels'].push(element['autoModelo']);
-                myChart.data['datasets'][0].data.push(element['COUNT(B.autoModelo)']);
+        const mostrarDatos = (categoria) => {
+            console.log(categoria);
+            categoria.forEach(element => {
+                myChart.data['labels'].push(element[0]);
+                myChart.data['datasets'][0].data.push(element['total']);
             });
         }
 
