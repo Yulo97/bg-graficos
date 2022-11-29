@@ -20,13 +20,13 @@
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
         crossorigin="anonymous"></script>
 
-    
-        <style>
-            .grafico{
-                width: 100vw;
-                height: 100vh;
-            }
-        </style>
+
+    <style>
+        .grafico {
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
 </head>
 
 <body>
@@ -60,6 +60,10 @@
             }
         })
 
+        let fechaInicio = Date.parse('2022-11-01 15:28:29');
+        let fechaFin = Date.parse('2023-12-25 15:28:29');
+        let fechaElemento;
+
         let url = 'http://localhost/bg-graficos/graficos-categorias.php';
 
         fetch(url)
@@ -70,8 +74,12 @@
         const mostrarDatos = (categoria) => {
             console.log(categoria);
             categoria.forEach(element => {
-                myChart.data['labels'].push(element[0]);
-                myChart.data['datasets'][0].data.push(element['total']);
+                fechaElemento = Date.parse(element['fecha'])                
+
+                if(fechaElemento >= fechaInicio && fechaElemento <= fechaFin){
+                    myChart.data['labels'].push(element[0]);
+                    myChart.data['datasets'][0].data.push(element['total']);
+                }
             });
         }
 
