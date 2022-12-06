@@ -20,7 +20,6 @@
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
         crossorigin="anonymous"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 
@@ -29,10 +28,15 @@
         <canvas id="myChart"></canvas>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
+
+        //let url = './graficos-autos.php';
         let fechaDesde;
         let fechasHasta;
+
+        function mostrarGrafico(url){
 
         var ctx = document.getElementById('myChart');
 
@@ -47,15 +51,14 @@
                 }]
             },
             options: {
-                scale: {
+                scales: {
                     y: {
                         beginAtZero: true
                     }
                 }
-            }
+            },
         })
 
-        let url = 'http://localhost/bg-graficos/graficos-autos.php';
 
         fetch(url)
             .then(response => response.json())
@@ -66,9 +69,10 @@
             console.log(auto);
             auto.forEach(element => {
                 myChart.data['labels'].push(element['autoModelo']);
-                myChart.data['datasets'][0].data.push(element['COUNT(B.autoModelo)']);
+                myChart.data['datasets'][0].data.push(element['contador']);
             });
         }
+    }
 
     </script>
 

@@ -52,19 +52,19 @@
                 }]
             },
             options: {
-                scale: {
+                scales: {
                     y: {
                         beginAtZero: true
                     }
                 }
-            }
+            },
         })
 
-        let fechaInicio = Date.parse('2022-11-01 15:28:29');
+        let fechaInicio = Date.parse('2020-11-01 15:28:29');
         let fechaFin = Date.parse('2023-12-25 15:28:29');
         let fechaElemento;
 
-        let url = 'http://localhost/bg-graficos/graficos-categorias.php';
+        let url = './graficos-categorias.php';
 
         fetch(url)
             .then(response => response.json())
