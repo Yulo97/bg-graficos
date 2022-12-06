@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -21,6 +21,12 @@
         crossorigin="anonymous"></script>
 
 
+    <style>
+        .grafico {
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
 </head>
 
 <body>
@@ -30,21 +36,19 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+
     <script>
 
         //let url = './graficos-autos.php';
         let fechaDesde;
         let fechasHasta;
-
-        function mostrarGrafico(url){
-
         var ctx = document.getElementById('myChart');
 
-        var myChart = new Chart(ctx, {
+        const  myChart = new Chart(ctx, {
             type: 'bar',
             data: {
                 datasets: [{
-                    label: '# de Automoviles',
+                    label: 'Cantidad de ventas',
                     backgroundColor: ['#ee6055', '#60d394', '#aaf683', '#ffd97d', '#ff9b85'],
                     borderColor: ['black'],
                     borderWidth: 2
@@ -55,24 +59,29 @@
                     y: {
                         beginAtZero: true
                     }
-                }
+                },
+                responsive: true,
+                maintainAspectRatio: false,
             },
-        })
+        });
 
+        function mostrarGrafico(url) {
+            
+            fetch(url)
+                .then(response => response.json())
+                .then(data => mostrarDatos(data))
+                .catch(error => console.log(error))
 
-        fetch(url)
-            .then(response => response.json())
-            .then(data => mostrarDatos(data))
-            .catch(error => console.log(error))
+            const mostrarDatos = (auto) => {
+                myChart.data['labels'] = [];
+                myChart.data['datasets'][0].data = [];
 
-        const mostrarDatos = (auto) => {
-            console.log(auto);
-            auto.forEach(element => {
-                myChart.data['labels'].push(element['autoModelo']);
-                myChart.data['datasets'][0].data.push(element['contador']);
-            });
-        }
-    }
+                auto.forEach(element => {
+                    myChart.data['labels'].push(element['autoModelo']);
+                    myChart.data['datasets'][0].data.push(element['contador']);
+                });
+            }
+        };
 
     </script>
 

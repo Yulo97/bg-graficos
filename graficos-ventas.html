@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -41,43 +41,45 @@
 
         //let url = './graficos-ventas.php';
 
-        function mostrarGrafico(url) {
-            var ctx = document.getElementById('myChart');
+        var ctx = document.getElementById('myChart');
 
-            var myChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    datasets: [{
-                        label: 'Ventas',
-                        borderColor: ['#ee6055'],
-                        borderWidth: 4
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
+        const myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: 'Ventas',
+                    borderColor: ['#ee6055'],
+                    borderWidth: 4
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
                     }
                 },
-            })
+                responsive: true,
+                maintainAspectRatio: false,
+            },
+        })
 
 
+        function mostrarGrafico(url) {
             fetch(url)
                 .then(response => response.json())
                 .then(data => mostrarDatos(data))
                 .catch(error => console.log(error))
 
             const mostrarDatos = (auto) => {
-                console.log(auto);
+                myChart.data['labels'] = [];
+                myChart.data['datasets'][0].data = [];
+
                 auto.forEach(element => {
                     myChart.data['labels'].push(element['autoModelo']);
                     myChart.data['datasets'][0].data.push(element['contador']);
                 });
             }
-
         };
-
 
     </script>
 
