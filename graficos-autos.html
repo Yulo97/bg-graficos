@@ -26,6 +26,10 @@
             width: 100vw;
             height: 100vh;
         }
+
+        body {
+            background-color: #292929;
+        }
     </style>
 </head>
 
@@ -44,13 +48,41 @@
         let fechasHasta;
         var ctx = document.getElementById('myChart');
 
-        const  myChart = new Chart(ctx, {
+        const plugin = {
+            id: 'customCanvasBackgroundColor',
+            beforeDraw: (chart, args, options) => {
+                const { ctx } = chart;
+                ctx.save();
+                ctx.globalCompositeOperation = 'destination-over';
+                ctx.fillStyle = options.color || '#99ffff';
+                ctx.fillRect(0, 0, chart.width, chart.height);
+                ctx.restore();
+            }
+        };
+
+        const myChart = new Chart(ctx, {
             type: 'bar',
             data: {
                 datasets: [{
                     label: 'Cantidad de ventas',
-                    backgroundColor: ['#ee6055', '#60d394', '#aaf683', '#ffd97d', '#ff9b85'],
-                    borderColor: ['black'],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 205, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(201, 203, 207, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(255, 159, 64)',
+                        'rgb(255, 205, 86)',
+                        'rgb(75, 192, 192)',
+                        'rgb(54, 162, 235)',
+                        'rgb(153, 102, 255)',
+                        'rgb(201, 203, 207)'
+                    ],
                     borderWidth: 2
                 }]
             },
@@ -62,11 +94,18 @@
                 },
                 responsive: true,
                 maintainAspectRatio: false,
+                plugins: {
+                    customCanvasBackgroundColor: {
+                        color: '#292929',
+                    },
+                },
             },
+            plugins: [plugin],
         });
 
+        //la "url" se pasa desde C# con parametros en GET
         function mostrarGrafico(url) {
-            
+
             fetch(url)
                 .then(response => response.json())
                 .then(data => mostrarDatos(data))

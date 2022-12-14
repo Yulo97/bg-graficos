@@ -26,6 +26,10 @@
             width: 100vw;
             height: 100vh;
         }
+
+        body {
+            background-color: #292929;
+        }
     </style>
 </head>
 
@@ -48,8 +52,13 @@
             data: {
                 datasets: [{
                     label: 'Ventas',
-                    borderColor: ['#ee6055'],
-                    borderWidth: 4
+                    backgroundColor: [
+                        'rgb(153, 102, 255)'
+                    ],
+                    borderColor: [
+                        'rgb(153, 102, 255)'
+                    ],
+                    borderWidth: 2
                 }]
             },
             options: {
@@ -70,13 +79,13 @@
                 .then(data => mostrarDatos(data))
                 .catch(error => console.log(error))
 
-            const mostrarDatos = (auto) => {
+            const mostrarDatos = (venta) => {
                 myChart.data['labels'] = [];
                 myChart.data['datasets'][0].data = [];
 
-                auto.forEach(element => {
-                    myChart.data['labels'].push(element['autoModelo']);
-                    myChart.data['datasets'][0].data.push(element['contador']);
+                venta.forEach(element => {
+                    myChart.data['labels'].push(element['fecha']);
+                    myChart.data['datasets'][0].data.push(element['venta']);
                 });
             }
         };
